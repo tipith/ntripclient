@@ -1,6 +1,10 @@
 #ifndef _SERIAL_H_
 #define _SERIAL_H_
 
+#ifdef __cplusplus  
+extern "C" { 
+#endif 
+
 #ifndef WINDOWSVERSION
 #include <errno.h>
 #include <fcntl.h>
@@ -78,5 +82,9 @@ void SerialFree(struct serial *sn);
 
 enum SerialProtocol SerialGetProtocol(const char *buf, int *ressize);
 enum SerialParity SerialGetParity(const char *buf, int *ressize);
+
+#ifdef __cplusplus 
+} 
+#endif 
 
 #endif /* _SERIAL_H_ */

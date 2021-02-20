@@ -1,6 +1,10 @@
 #ifndef _RECEIVE_RUN_H_
 #define _RECEIVE_RUN_H_
 
+#ifdef __cplusplus  
+extern "C" { 
+#endif 
+
 #include "serial.h"
 
 #define ALARMTIME   (2*60)
@@ -33,5 +37,9 @@ struct Args
 
 int receive_run(const struct Args* args);
 void receive_stop(void);
+
+#ifdef __cplusplus 
+} 
+#endif 
 
 #endif /* _RECEIVE_RUN_H_ */
