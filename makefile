@@ -11,14 +11,14 @@ OPTS = -Wall -W -O3
 endif
 
 ntripclient: ntripclient.c serial.c
-	$(CC) $(OPTS) ntripclient.c -o $@ $(LIBS)
+	$(CC) $(OPTS) ntripclient.c serial.c receive.c -o $@ $(LIBS)
 
 clean:
 	$(RM) ntripclient core*
 
 
 archive:
-	zip -9 ntripclient.zip ntripclient.c makefile README serial.c
+	zip -9 ntripclient.zip ntripclient.c makefile README serial.c receive.c
 
 tgzarchive:
-	tar -czf ntripclient.tgz ntripclient.c makefile README serial.c
+	tar -czf ntripclient.tgz ntripclient.c makefile README serial.c receive.c
