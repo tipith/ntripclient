@@ -7,7 +7,7 @@ extern "C" {
 
 #include "serial.h"
 
-#define ALARMTIME   (2*60)
+#define ALARMTIME   (30)
 
 enum MODE { HTTP = 1, RTSP = 2, NTRIP1 = 3, AUTO = 4, UDP = 5, END };
 

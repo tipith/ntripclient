@@ -97,6 +97,7 @@ int receive_run(const struct Args* args)
     size_t nmeabufpos = 0;
     size_t nmeastarpos = 0;
     int sleeptime = 0;
+    stop = 0;
 
     struct serial sx;
     FILE *ser = 0;
@@ -898,12 +899,25 @@ int receive_run(const struct Args* args)
         }
         else
         {
-          if(connect(sockfd, (struct sockaddr *)&their_addr,
-          sizeof(struct sockaddr)) == -1)
+          if(connect(sockfd, (struct sockaddr *)&their_addr, sizeof(struct sockaddr)) == -1)
           {
             myperror("connect");
             error = 1;
           }
+          struct timeval timeout;
+          timeout.tv_sec = ALARMTIME + 1;
+          timeout.tv_usec = 0;
+
+          if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char*) &timeout, sizeof(timeout)) < 0)
+          {
+              fprintf(stderr, "unable to set recv timeout\n");
+          }
+
+          if (setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, (char*) &timeout, sizeof(timeout)) < 0)
+          {
+              fprintf(stderr, "unable to set read timeout\n");
+          }
+
           if(!stop && !error)
           {
             if(!args->data)
@@ -987,8 +1001,7 @@ int receive_run(const struct Args* args)
               int totalbytes = 0;
               int chunksize = 0;
 
-              while(!stop && !error &&
-              (numbytes=recv(sockfd, buf, MAXDATASIZE-1, 0)) > 0)
+              while(!stop && !error && (numbytes=recv(sockfd, buf, MAXDATASIZE-1, 0)) > 0 && !stop && !error)
               {
 #ifndef WINDOWSVERSION
                 alarm(ALARMTIME);
