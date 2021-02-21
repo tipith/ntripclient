@@ -134,6 +134,33 @@ static enum SerialProtocol SerialGetProtocol(const char *buf, int *ressize)
   return Protocol;
 }
 
+enum SerialBaud SerialBaudrate(int baud)
+{
+  enum SerialBaud Baud = SPAPROTOCOL_NONE;
+
+  switch (baud)
+  {
+    case 50: return SPABAUD_50;
+    case 110: return SPABAUD_110;
+    case 300: return SPABAUD_300;
+    case 600: return SPABAUD_600;
+    case 1200: return SPABAUD_1200;
+    case 2400: return SPABAUD_2400;
+    case 4800: return SPABAUD_4800;
+    case 9600: return SPABAUD_9600;
+    case 19200: return SPABAUD_19200;
+    case 38400: return SPABAUD_38400;
+    case 57600: return SPABAUD_57600;
+    case 115200: return SPABAUD_115200;
+    case 230400: return SPABAUD_230400;
+    case 460800: return SPABAUD_460800;
+    case 500000: return SPABAUD_500000;
+    case 576000: return SPABAUD_576000;
+    case 921600: return SPABAUD_921600;
+    default: return SPABAUD_ERROR;
+  }
+}
+
 #ifndef WINDOWSVERSION
 static void SerialFree(struct serial *sn)
 {
